@@ -286,6 +286,20 @@ Network Ninja automatically redacts sensitive information:
 - **Cookie headers** - Automatically masked
 - **Set-Cookie headers** - Automatically masked
 
+## 📸 Screenshots
+
+### Main Demo Interface
+![Network Ninja Demo](screenshots/1.jpg)
+*The main demo interface showing various API request buttons and response display area.*
+
+### Floating Bubble UI
+![Floating Bubble UI](screenshots/2.jpg)
+*The floating bubble appears as a draggable icon that shows the number of network requests. Tap it to access the detailed logs screen.*
+
+### Network Logs Screen
+![Network Logs Screen](screenshots/3.jpg)
+*The comprehensive logs screen shows all network requests with filtering options, search functionality, and detailed request/response information.*
+
 ## 📱 Example App
 
 Check out the [example app](example/) for a complete implementation:
