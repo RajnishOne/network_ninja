@@ -61,20 +61,19 @@ class NetworkLog {
     Map<String, String>? responseHeaders,
     Duration? duration,
     String? error,
-  }) =>
-      NetworkLog(
-        id: id ?? this.id,
-        timestamp: timestamp ?? this.timestamp,
-        method: method ?? this.method,
-        endpoint: endpoint ?? this.endpoint,
-        requestBody: requestBody ?? this.requestBody,
-        requestHeaders: requestHeaders ?? this.requestHeaders,
-        responseStatus: responseStatus ?? this.responseStatus,
-        responseBody: responseBody ?? this.responseBody,
-        responseHeaders: responseHeaders ?? this.responseHeaders,
-        duration: duration ?? this.duration,
-        error: error ?? this.error,
-      );
+  }) => NetworkLog(
+    id: id ?? this.id,
+    timestamp: timestamp ?? this.timestamp,
+    method: method ?? this.method,
+    endpoint: endpoint ?? this.endpoint,
+    requestBody: requestBody ?? this.requestBody,
+    requestHeaders: requestHeaders ?? this.requestHeaders,
+    responseStatus: responseStatus ?? this.responseStatus,
+    responseBody: responseBody ?? this.responseBody,
+    responseHeaders: responseHeaders ?? this.responseHeaders,
+    duration: duration ?? this.duration,
+    error: error ?? this.error,
+  );
 
   @override
   bool operator ==(Object other) {
@@ -95,16 +94,16 @@ class NetworkLog {
 
   @override
   int get hashCode => Object.hash(
-      id,
-      timestamp,
-      method,
-      endpoint,
-      requestBody,
-      requestHeaders,
-      responseStatus,
-      responseBody,
-      responseHeaders,
-      duration,
-      error,
-    );
+    id,
+    timestamp,
+    method,
+    endpoint,
+    requestBody,
+    requestHeaders,
+    responseStatus,
+    responseBody,
+    responseHeaders,
+    duration,
+    error,
+  );
 }

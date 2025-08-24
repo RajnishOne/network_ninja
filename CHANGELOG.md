@@ -5,23 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Added
-- Search functionality in network logs list
-- Export options (cURL, JSON, share)
-- Click-to-copy functionality on details page
-- Professional package structure and documentation
-
-### Changed
-- Renamed package from `network_ninja_lib` to `network_ninja`
-- Improved UI animations and performance
-- Enhanced error handling and request matching
+## [1.0.2] - 2024-12-19
 
 ### Fixed
-- Request/response matching issues
-- Memory leaks in stream subscriptions
-- UI responsiveness during high-frequency polling
+- Fixed async gap issues in network log details screen by adding context.mounted checks
+- Fixed join_return_with_assignment issues in network ninja controller
+- Fixed prefer_expression_function_bodies issues where appropriate
+- Fixed prefer_const_constructors issues in UI components
+- Fixed avoid_print issues in test files
+- Fixed prefer_interpolation_to_compose_strings issues
+- Fixed redundant argument values in test files
+- Fixed test failures related to copyWith method behavior
+- Improved code formatting and linting compliance
+
+### Changed
+- Enhanced error handling and context safety
+- Improved test coverage and reliability
+- Updated CHANGELOG.md to only include released versions
+
+## [1.0.1] - 2024-12-19
+
+### Fixed
+- Fixed async gap issues in network log details screen
+- Fixed linting issues and improved code quality
+- Fixed test failures and improved test coverage
+- Fixed repository URL consistency in pubspec.yaml
+
+### Changed
+- Improved code formatting and linting compliance
+- Enhanced error handling and context safety
 
 ## [1.0.0] - 2024-08-24
 

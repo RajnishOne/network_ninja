@@ -101,7 +101,7 @@ class NetworkLogDetailsScreen extends StatelessWidget {
 
   void _shareLog(BuildContext context) {
     final shareText =
-        '''
+    '''
 Network Log: ${log.method} ${log.endpoint}
 Status: ${log.statusText}
 Time: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(log.timestamp)}
@@ -117,16 +117,16 @@ Duration: ${log.durationText}
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Could not open URL')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Could not open URL')));
         }
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid URL')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Invalid URL')));
       }
     }
   }
@@ -171,7 +171,8 @@ Duration: ${log.durationText}
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) => _handleMenuAction(context, value),
-            itemBuilder: (context) => [
+            itemBuilder: (context) =>
+            [
               const PopupMenuItem(
                 value: 'copy_curl',
                 child: Row(
@@ -272,14 +273,18 @@ Duration: ${log.durationText}
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
-                                onTap: () => _copyToClipboard(
-                                  context,
-                                  log.endpoint,
-                                  'URL copied to clipboard',
-                                ),
+                                onTap: () =>
+                                    _copyToClipboard(
+                                      context,
+                                      log.endpoint,
+                                      'URL copied to clipboard',
+                                    ),
                                 child: Text(
                                   '${log.method} ${log.endpoint}',
-                                  style: Theme.of(context).textTheme.titleMedium
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .titleMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -287,7 +292,10 @@ Duration: ${log.durationText}
                                 DateFormat(
                                   'yyyy-MM-dd HH:mm:ss',
                                 ).format(log.timestamp),
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodySmall,
                               ),
                             ],
                           ),
@@ -309,7 +317,10 @@ Duration: ${log.durationText}
                             if (log.durationText.isNotEmpty)
                               Text(
                                 log.durationText,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .bodySmall,
                               ),
                           ],
                         ),
@@ -336,10 +347,11 @@ Duration: ${log.durationText}
                     ),
                     const SizedBox(height: 8),
                     ...log.requestHeaders!.entries.map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text('${e.key}: ${e.value}'),
-                      ),
+                          (e) =>
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Text('${e.key}: ${e.value}'),
+                          ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -354,7 +366,8 @@ Duration: ${log.durationText}
                       width: double.infinity,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
+                        color: Theme
+                            .of(context)
                             .colorScheme
                             .surfaceContainerHighest
                             .withValues(alpha: 0.3),
@@ -362,7 +375,11 @@ Duration: ${log.durationText}
                       ),
                       child: SelectableText(
                         _formatJsonString(log.requestBody!),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(
                           fontFamily: 'monospace',
                         ),
                       ),
@@ -392,10 +409,11 @@ Duration: ${log.durationText}
                       ),
                       const SizedBox(height: 8),
                       ...log.responseHeaders!.entries.map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Text('${e.key}: ${e.value}'),
-                        ),
+                            (e) =>
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text('${e.key}: ${e.value}'),
+                            ),
                       ),
                       const SizedBox(height: 16),
                     ],
@@ -410,7 +428,8 @@ Duration: ${log.durationText}
                         width: double.infinity,
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Theme.of(context)
+                          color: Theme
+                              .of(context)
                               .colorScheme
                               .surfaceContainerHighest
                               .withValues(alpha: 0.3),
@@ -418,7 +437,10 @@ Duration: ${log.durationText}
                         ),
                         child: SelectableText(
                           _formatJsonString(log.responseBody!),
-                          style: Theme.of(context).textTheme.bodySmall
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .bodySmall
                               ?.copyWith(fontFamily: 'monospace'),
                         ),
                       ),
@@ -500,9 +522,16 @@ class _DetailSection extends StatelessWidget {
           onTap: onTitleTap,
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            style: Theme
+                .of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .primary,
             ),
           ),
         ),
@@ -511,9 +540,13 @@ class _DetailSection extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Theme.of(
+            color: Theme
+                .of(
               context,
-            ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+            )
+                .colorScheme
+                .surfaceContainerHighest
+                .withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(8),
           ),
           child: content,
