@@ -43,9 +43,17 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
   void _setupDio() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://jsonplaceholder.typicode.com',
-        connectTimeout: const Duration(seconds: 5),
-        receiveTimeout: const Duration(seconds: 3),
+        baseUrl: 'https://httpbin.org',
+        connectTimeout: const Duration(seconds: 4),
+        receiveTimeout: const Duration(seconds: 4),
+        validateStatus: (status) {
+          // Accept all status codes to see them in the logs
+          return status != null && status < 500;
+        },
+        headers: {
+          'User-Agent': 'NetworkNinja/1.0',
+          'Accept': 'application/json',
+        },
       ),
     );
 
@@ -147,11 +155,6 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                   label: const Text('DELETE Request'),
                 ),
                 ElevatedButton.icon(
-                  onPressed: _isLoading ? null : _makeErrorRequest,
-                  icon: const Icon(Icons.error),
-                  label: const Text('Error Request'),
-                ),
-                ElevatedButton.icon(
                   onPressed: _isLoading ? null : _makeSlowRequest,
                   icon: const Icon(Icons.timer),
                   label: const Text('Slow Request'),
@@ -228,7 +231,10 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
   Future<void> _makeGetRequest() async {
     setState(() => _isLoading = true);
     try {
-      final response = await _dio.get('/posts/1');
+      final response = await _dio.get(
+        '/get',
+        queryParameters: {'param1': 'value1', 'param2': 'value2'},
+      );
       setState(() {
         _lastResponse = _formatResponse(response);
         _isLoading = false;
@@ -245,7 +251,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     setState(() => _isLoading = true);
     try {
       final response = await _dio.post(
-        '/posts',
+        '/post',
         data: {
           'title': 'Network Ninja Test Post',
           'body': 'This is a test post from Network Ninja example app',
@@ -268,7 +274,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     setState(() => _isLoading = true);
     try {
       final response = await _dio.put(
-        '/posts/1',
+        '/put',
         data: {
           'id': 1,
           'title': 'Updated Network Ninja Test Post',
@@ -291,7 +297,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
   Future<void> _makeDeleteRequest() async {
     setState(() => _isLoading = true);
     try {
-      final response = await _dio.delete('/posts/1');
+      final response = await _dio.delete('/delete');
       setState(() {
         _lastResponse = _formatResponse(response);
         _isLoading = false;
@@ -304,24 +310,11 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     }
   }
 
-  Future<void> _makeErrorRequest() async {
-    setState(() => _isLoading = true);
-    try {
-      await _dio.get('/nonexistent-endpoint');
-    } catch (e) {
-      setState(() {
-        _lastResponse = 'Error: $e';
-        _isLoading = false;
-      });
-    }
-  }
-
   Future<void> _makeSlowRequest() async {
     setState(() => _isLoading = true);
     try {
-      // Simulate a slow request
-      await Future.delayed(const Duration(seconds: 2));
-      final response = await _dio.get('/posts/2');
+      // Use httpbin's delay endpoint to simulate a slow request
+      final response = await _dio.get('/delay/2');
       setState(() {
         _lastResponse = _formatResponse(response);
         _isLoading = false;
