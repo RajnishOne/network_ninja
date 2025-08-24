@@ -12,9 +12,7 @@ void main() {
       error: 'Bad Request',
     );
 
-    print('statusText: "${log.statusText}"');
-    print('responseStatus: ${log.responseStatus}');
-    print('error: ${log.error}');
+    // Debug output removed for production
 
     expect(log.statusText, equals('Error'));
   });

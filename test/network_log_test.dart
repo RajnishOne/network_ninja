@@ -17,7 +17,6 @@ void main() {
         responseBody: '{"success": true}',
         responseHeaders: {'Content-Type': 'application/json'},
         duration: const Duration(milliseconds: 150),
-        error: null,
       );
     });
 
@@ -63,7 +62,9 @@ void main() {
         expect(log.responseStatus, equals(201));
         expect(log.responseBody, equals('{"id": 123}'));
         expect(
-            log.responseHeaders, equals({'Content-Type': 'application/json'}));
+          log.responseHeaders,
+          equals({'Content-Type': 'application/json'}),
+        );
         expect(log.duration, equals(const Duration(seconds: 2)));
         expect(log.error, equals('Connection timeout'));
       });
@@ -94,17 +95,10 @@ void main() {
       test('should return false for null status', () {
         // Create a new log with null responseStatus
         final logWithNullStatus = NetworkLog(
-          id: baseLog.id,
-          timestamp: baseLog.timestamp,
-          method: baseLog.method,
-          endpoint: baseLog.endpoint,
-          requestBody: baseLog.requestBody,
-          requestHeaders: baseLog.requestHeaders,
-          responseStatus: null,
-          responseBody: baseLog.responseBody,
-          responseHeaders: baseLog.responseHeaders,
-          duration: baseLog.duration,
-          error: baseLog.error,
+          id: 'test-null-status',
+          timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+          method: 'GET',
+          endpoint: 'https://api.example.com/test',
         );
         expect(logWithNullStatus.isSuccess, isFalse);
       });
@@ -118,12 +112,9 @@ void main() {
 
     group('hasError Property', () {
       test('should return false for 2xx status codes without error', () {
-        expect(baseLog.copyWith(responseStatus: 200, error: null).hasError,
-            isFalse);
-        expect(baseLog.copyWith(responseStatus: 201, error: null).hasError,
-            isFalse);
-        expect(baseLog.copyWith(responseStatus: 299, error: null).hasError,
-            isFalse);
+        expect(baseLog.copyWith(responseStatus: 200).hasError, isFalse);
+        expect(baseLog.copyWith(responseStatus: 201).hasError, isFalse);
+        expect(baseLog.copyWith(responseStatus: 299).hasError, isFalse);
       });
 
       test('should return true for 4xx status codes', () {
@@ -142,18 +133,19 @@ void main() {
 
       test('should return true when error message is present', () {
         expect(
-            baseLog
-                .copyWith(responseStatus: 200, error: 'Network error')
-                .hasError,
-            isTrue);
+          baseLog
+              .copyWith(responseStatus: 200, error: 'Network error')
+              .hasError,
+          isTrue,
+        );
         expect(
-            baseLog.copyWith(responseStatus: null, error: 'Timeout').hasError,
-            isTrue);
+          baseLog.copyWith(responseStatus: null, error: 'Timeout').hasError,
+          isTrue,
+        );
       });
 
       test('should return false for null status without error', () {
-        expect(baseLog.copyWith(responseStatus: null, error: null).hasError,
-            isFalse);
+        expect(baseLog.copyWith(responseStatus: null).hasError, isFalse);
       });
     });
 
@@ -189,17 +181,10 @@ void main() {
       test('should return "Pending" for null status', () {
         // Create a new log with null responseStatus
         final logWithNullStatus = NetworkLog(
-          id: baseLog.id,
-          timestamp: baseLog.timestamp,
-          method: baseLog.method,
-          endpoint: baseLog.endpoint,
-          requestBody: baseLog.requestBody,
-          requestHeaders: baseLog.requestHeaders,
-          responseStatus: null,
-          responseBody: baseLog.responseBody,
-          responseHeaders: baseLog.responseHeaders,
-          duration: baseLog.duration,
-          error: baseLog.error,
+          id: 'test-null-status',
+          timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+          method: 'GET',
+          endpoint: 'https://api.example.com/test',
         );
         expect(logWithNullStatus.statusText, equals('Pending'));
       });
@@ -226,29 +211,31 @@ void main() {
         );
       });
 
-      test('should return seconds with decimal for durations 1 second or more',
-          () {
-        expect(
-          baseLog.copyWith(duration: const Duration(seconds: 1)).durationText,
-          equals('1.0s'),
-        );
-        expect(
-          baseLog
-              .copyWith(duration: const Duration(milliseconds: 1500))
-              .durationText,
-          equals('1.5s'),
-        );
-        expect(
-          baseLog.copyWith(duration: const Duration(seconds: 2)).durationText,
-          equals('2.0s'),
-        );
-        expect(
-          baseLog
-              .copyWith(duration: const Duration(milliseconds: 2500))
-              .durationText,
-          equals('2.5s'),
-        );
-      });
+      test(
+        'should return seconds with decimal for durations 1 second or more',
+        () {
+          expect(
+            baseLog.copyWith(duration: const Duration(seconds: 1)).durationText,
+            equals('1.0s'),
+          );
+          expect(
+            baseLog
+                .copyWith(duration: const Duration(milliseconds: 1500))
+                .durationText,
+            equals('1.5s'),
+          );
+          expect(
+            baseLog.copyWith(duration: const Duration(seconds: 2)).durationText,
+            equals('2.0s'),
+          );
+          expect(
+            baseLog
+                .copyWith(duration: const Duration(milliseconds: 2500))
+                .durationText,
+            equals('2.5s'),
+          );
+        },
+      );
 
       test('should return empty string for null duration', () {
         // Create a new log with null duration
@@ -271,26 +258,30 @@ void main() {
 
     group('shortEndpoint Property', () {
       test('should return full endpoint when length is 50 or less', () {
-        final shortEndpoint = 'https://api.example.com/short';
+        const shortEndpoint = 'https://api.example.com/short';
         final log = baseLog.copyWith(endpoint: shortEndpoint);
         expect(log.shortEndpoint, equals(shortEndpoint));
       });
 
       test('should truncate endpoint when length is more than 50', () {
-        final longEndpoint =
+        const longEndpoint =
             'https://api.example.com/very/long/endpoint/that/exceeds/fifty/characters';
         final log = baseLog.copyWith(endpoint: longEndpoint);
-        expect(log.shortEndpoint,
-            equals('https://api.example.com/very/long/endpoint/that...'));
+        expect(
+          log.shortEndpoint,
+          equals('https://api.example.com/very/long/endpoint/that...'),
+        );
         expect(log.shortEndpoint.length, equals(50));
       });
 
       test('should handle endpoint exactly 50 characters', () {
-        final exactEndpoint =
+        const exactEndpoint =
             'https://api.example.com/endpoint/exactly/fifty/characters/here';
         final log = baseLog.copyWith(endpoint: exactEndpoint);
-        expect(log.shortEndpoint,
-            equals('https://api.example.com/endpoint/exactly/fifty/...'));
+        expect(
+          log.shortEndpoint,
+          equals('https://api.example.com/endpoint/exactly/fifty/...'),
+        );
       });
     });
 
@@ -298,7 +289,7 @@ void main() {
       test('should create new instance with updated values', () {
         final newTimestamp = DateTime(2024, 1, 2, 12, 0, 0);
         final newDuration = const Duration(seconds: 5);
-        final newStatus = 404;
+        const newStatus = 404;
 
         final copiedLog = baseLog.copyWith(
           timestamp: newTimestamp,
@@ -329,17 +320,10 @@ void main() {
       test('should handle null values correctly', () {
         // Create a new log with null values
         final copiedLog = NetworkLog(
-          id: baseLog.id,
-          timestamp: baseLog.timestamp,
-          method: baseLog.method,
-          endpoint: baseLog.endpoint,
-          requestBody: baseLog.requestBody,
-          requestHeaders: baseLog.requestHeaders,
-          responseStatus: null,
-          responseBody: baseLog.responseBody,
-          responseHeaders: baseLog.responseHeaders,
-          duration: null,
-          error: null,
+          id: 'test-null-values',
+          timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+          method: 'GET',
+          endpoint: 'https://api.example.com/test',
         );
 
         expect(copiedLog.responseStatus, isNull);
@@ -350,19 +334,7 @@ void main() {
 
     group('Equality and HashCode', () {
       test('should be equal to identical instance', () {
-        final identicalLog = NetworkLog(
-          id: baseLog.id,
-          timestamp: baseLog.timestamp,
-          method: baseLog.method,
-          endpoint: baseLog.endpoint,
-          requestBody: baseLog.requestBody,
-          requestHeaders: baseLog.requestHeaders,
-          responseStatus: baseLog.responseStatus,
-          responseBody: baseLog.responseBody,
-          responseHeaders: baseLog.responseHeaders,
-          duration: baseLog.duration,
-          error: baseLog.error,
-        );
+        final identicalLog = baseLog.copyWith();
 
         expect(baseLog, equals(identicalLog));
         expect(baseLog.hashCode, equals(identicalLog.hashCode));
@@ -398,11 +370,7 @@ void main() {
 
     group('Edge Cases', () {
       test('should handle empty strings', () {
-        final log = baseLog.copyWith(
-          requestBody: '',
-          error: '',
-          endpoint: '',
-        );
+        final log = baseLog.copyWith(requestBody: '', error: '', endpoint: '');
 
         expect(log.requestBody, equals(''));
         expect(log.error, equals(''));
@@ -411,7 +379,7 @@ void main() {
       });
 
       test('should handle very long endpoints', () {
-        final veryLongEndpoint = 'https://api.example.com/' + 'a' * 100;
+        final veryLongEndpoint = 'https://api.example.com/${'a' * 100}';
         final log = baseLog.copyWith(endpoint: veryLongEndpoint);
 
         expect(log.shortEndpoint.length, equals(50));

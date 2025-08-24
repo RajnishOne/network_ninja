@@ -142,7 +142,7 @@ class _NetworkLogsBubbleState extends State<NetworkLogsBubble>
                 ),
                 child: Stack(
                   children: [
-                    Center(
+                    const Center(
                       child: Icon(
                         Icons.network_check,
                         color: Colors.white,

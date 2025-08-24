@@ -324,13 +324,11 @@ class _NetworkLogCard extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => NetworkLogDetailsScreen(log: log),
-            ),
-          );
-        },
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => NetworkLogDetailsScreen(log: log),
+          ),
+        ),
       ),
     );
   }

@@ -103,8 +103,9 @@ class _NetworkNinjaInterceptor extends Interceptor {
     }
 
     final startTime = _requestStartTimes[requestId];
-    final duration =
-        startTime != null ? DateTime.now().difference(startTime) : null;
+    final duration = startTime != null
+        ? DateTime.now().difference(startTime)
+        : null;
 
     // Update the log with response data
     _service.updateLogWithResponse(
@@ -115,8 +116,8 @@ class _NetworkNinjaInterceptor extends Interceptor {
       duration: duration,
     );
 
-    _requestStartTimes.remove(requestId);
     super.onResponse(response, handler);
+    _requestStartTimes.remove(requestId);
   }
 
   @override
@@ -130,8 +131,9 @@ class _NetworkNinjaInterceptor extends Interceptor {
     }
 
     final startTime = _requestStartTimes[requestId];
-    final duration =
-        startTime != null ? DateTime.now().difference(startTime) : null;
+    final duration = startTime != null
+        ? DateTime.now().difference(startTime)
+        : null;
 
     // Update the log with error data
     _service.updateLogWithResponse(
@@ -143,8 +145,8 @@ class _NetworkNinjaInterceptor extends Interceptor {
       error: err.message,
     );
 
-    _requestStartTimes.remove(requestId);
     super.onError(err, handler);
+    _requestStartTimes.remove(requestId);
   }
 
   String _generateUniqueRequestId(RequestOptions options) {

@@ -117,7 +117,7 @@ void main() {
 
       test('should create log with all information', () {
         // Arrange
-        final headers = {'Content-Type': 'application/json'};
+        const headers = {'Content-Type': 'application/json'};
         final requestBody = '{"test": "data"}';
 
         // Act
