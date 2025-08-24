@@ -59,7 +59,7 @@ class NetworkNinjaController {
   }
 
   /// Get the current log count
-  static int get logCount => NetworkLogsService.instance.logs.length;
+  static int get logCount => NetworkLogsService.instance.logCount;
 
   /// Get all logs
   static List<dynamic> get logs => NetworkLogsService.instance.logs;

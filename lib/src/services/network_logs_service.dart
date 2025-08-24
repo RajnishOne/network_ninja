@@ -12,10 +12,11 @@ class NetworkLogsService {
   final StreamController<List<NetworkLog>> _logsController =
       StreamController<List<NetworkLog>>.broadcast();
 
-  static const int _maxLogs = 1000; // Keep last 1000 logs
+  static const int _maxLogs = 100; // Keep last 100 logs
 
   Stream<List<NetworkLog>> get logsStream => _logsController.stream;
   List<NetworkLog> get logs => List.unmodifiable(_logs);
+  int get logCount => _logs.length;
 
   void addLog(NetworkLog log, {String? requestId}) {
     _logs.add(log);
