@@ -288,10 +288,10 @@ Network Ninja automatically redacts sensitive information:
 
 ## 📸 Screenshots
 
-|                 Main Demo Interface                 |             Network Logs Screen              |   Network Log Details Screen    |
-|:---------------------------------------------------:|:--------------------------------------------:|:-------------------------------:|
-|             ![Demo](screenshots/1.jpg)              |         ![Bubble](screenshots/2.jpg)         |   ![Logs](screenshots/3.jpg)    |
-|        *Main demo interface with bubble UI*         | *Comprehensive logs with filters and search* | *Detailed API logs and Actions* |
+|                 Main Demo Interface                 |             Network Logs Screen              |      Network Log Details Screen      |
+|:---------------------------------------------------:|:--------------------------------------------:|:------------------------------------:|
+|             ![Demo](screenshots/1.jpg)              |         ![Bubble](screenshots/2.jpg)         |      ![Logs](screenshots/3.jpg)      |
+|        *Main demo interface with bubble UI*         | *Comprehensive logs with filters and search* | *Detailed API logs and Action Items* |
 
 ## 📱 Example App
 
