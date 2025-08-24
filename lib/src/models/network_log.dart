@@ -94,8 +94,7 @@ class NetworkLog {
   }
 
   @override
-  int get hashCode {
-    return Object.hash(
+  int get hashCode => Object.hash(
       id,
       timestamp,
       method,
@@ -108,5 +107,4 @@ class NetworkLog {
       duration,
       error,
     );
-  }
 }

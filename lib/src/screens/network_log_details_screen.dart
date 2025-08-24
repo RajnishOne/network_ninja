@@ -70,7 +70,7 @@ class NetworkLogDetailsScreen extends StatelessWidget {
 
     // Add body if present
     if (log.requestBody != null && log.requestBody!.isNotEmpty) {
-      buffer.write('-d \'${log.requestBody!.replaceAll("'", "\\'")}\' ');
+      buffer.write('-d \'${log.requestBody!.replaceAll("'", r"\'")}\' ');
     }
 
     buffer.write('"${log.endpoint}"');
@@ -110,7 +110,7 @@ Duration: ${log.durationText}
     _copyToClipboard(context, shareText, 'Log details copied to clipboard');
   }
 
-  void _openUrlInBrowser(BuildContext context) async {
+  Future<void> _openUrlInBrowser(BuildContext context) async {
     try {
       final uri = Uri.parse(log.endpoint);
       if (await canLaunchUrl(uri)) {
