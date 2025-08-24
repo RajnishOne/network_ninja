@@ -1,7 +1,7 @@
 name: network_ninja
 description: A powerful network logger library with floating bubble UI for monitoring API calls in Flutter applications
-version: 1.0.0
-repository: https://github.com/yourusername/network_ninja
+version: 1.0.1
+repository: https://github.com/bluematterin/network_ninja
 issue_tracker: https://github.com/BlueMatterIn/network_ninja/issues
 license: MIT
 
