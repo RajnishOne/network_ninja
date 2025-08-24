@@ -61,8 +61,7 @@ class NetworkLog {
     Map<String, String>? responseHeaders,
     Duration? duration,
     String? error,
-  }) {
-    return NetworkLog(
+  }) => NetworkLog(
       id: id ?? this.id,
       timestamp: timestamp ?? this.timestamp,
       method: method ?? this.method,
@@ -74,6 +73,39 @@ class NetworkLog {
       responseHeaders: responseHeaders ?? this.responseHeaders,
       duration: duration ?? this.duration,
       error: error ?? this.error,
+    );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is NetworkLog &&
+        other.id == id &&
+        other.timestamp == timestamp &&
+        other.method == method &&
+        other.endpoint == endpoint &&
+        other.requestBody == requestBody &&
+        other.requestHeaders == requestHeaders &&
+        other.responseStatus == responseStatus &&
+        other.responseBody == responseBody &&
+        other.responseHeaders == responseHeaders &&
+        other.duration == duration &&
+        other.error == error;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      id,
+      timestamp,
+      method,
+      endpoint,
+      requestBody,
+      requestHeaders,
+      responseStatus,
+      responseBody,
+      responseHeaders,
+      duration,
+      error,
     );
   }
 }
