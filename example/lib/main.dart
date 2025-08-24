@@ -41,11 +41,13 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
   }
 
   void _setupDio() {
-    _dio = Dio(BaseOptions(
-      baseUrl: 'https://jsonplaceholder.typicode.com',
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
-    ));
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+        connectTimeout: const Duration(seconds: 5),
+        receiveTimeout: const Duration(seconds: 3),
+      ),
+    );
 
     // Add Network Ninja interceptor
     NetworkNinjaController.addInterceptor(_dio);
@@ -88,7 +90,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                     const SizedBox(height: 8),
                     Text(
                       'This example demonstrates the Network Ninja package features. '
-                          'Make some API requests and then check the network logs!',
+                      'Make some API requests and then check the network logs!',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
@@ -118,10 +120,7 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'API Requests',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('API Requests', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             Wrap(
               spacing: 8,
@@ -194,33 +193,29 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: _isLoading
-                      ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
+                      ? const Center(child: CircularProgressIndicator())
                       : _lastResponse.isEmpty
                       ? Center(
-                    child: Text(
-                      'Make an API request to see the response here',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .outline,
-                      ),
-                    ),
-                  )
+                          child: Text(
+                            'Make an API request to see the response here',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                          ),
+                        )
                       : SingleChildScrollView(
-                    child: SelectableText(
-                      _lastResponse,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
+                          child: SelectableText(
+                            _lastResponse,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
                 ),
               ),
             ],

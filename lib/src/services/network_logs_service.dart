@@ -3,8 +3,10 @@ import '../models/network_log.dart';
 
 class NetworkLogsService {
   static NetworkLogsService? _instance;
+
   static NetworkLogsService get instance =>
       _instance ??= NetworkLogsService._();
+
   NetworkLogsService._();
 
   final List<NetworkLog> _logs = [];
@@ -15,7 +17,9 @@ class NetworkLogsService {
   static const int _maxLogs = 100; // Keep last 100 logs
 
   Stream<List<NetworkLog>> get logsStream => _logsController.stream;
+
   List<NetworkLog> get logs => List.unmodifiable(_logs);
+
   int get logCount => _logs.length;
 
   void addLog(NetworkLog log, {String? requestId}) {
@@ -58,16 +62,14 @@ class NetworkLogsService {
     required String endpoint,
     String? requestBody,
     Map<String, String>? requestHeaders,
-  }) {
-    return NetworkLog(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      timestamp: DateTime.now(),
-      method: method,
-      endpoint: endpoint,
-      requestBody: requestBody,
-      requestHeaders: requestHeaders,
-    );
-  }
+  }) => NetworkLog(
+    id: DateTime.now().millisecondsSinceEpoch.toString(),
+    timestamp: DateTime.now(),
+    method: method,
+    endpoint: endpoint,
+    requestBody: requestBody,
+    requestHeaders: requestHeaders,
+  );
 
   // Helper method to update a log with response data
   void updateLogWithResponse(

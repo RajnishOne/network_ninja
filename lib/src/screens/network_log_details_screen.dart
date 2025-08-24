@@ -100,7 +100,8 @@ class NetworkLogDetailsScreen extends StatelessWidget {
   }
 
   void _shareLog(BuildContext context) {
-    final shareText = '''
+    final shareText =
+        '''
 Network Log: ${log.method} ${log.endpoint}
 Status: ${log.statusText}
 Time: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(log.timestamp)}
@@ -115,14 +116,14 @@ Duration: ${log.durationText}
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open URL')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Could not open URL')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid URL')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Invalid URL')));
     }
   }
 
@@ -133,10 +134,7 @@ Duration: ${log.durationText}
       'timestamp': log.timestamp.toIso8601String(),
       'status': log.responseStatus,
       'duration': log.duration?.inMilliseconds,
-      'request': {
-        'headers': log.requestHeaders,
-        'body': log.requestBody,
-      },
+      'request': {'headers': log.requestHeaders, 'body': log.requestBody},
       'response': {
         'headers': log.responseHeaders,
         'body': log.responseBody,
@@ -279,9 +277,7 @@ Duration: ${log.durationText}
                                 ),
                                 child: Text(
                                   '${log.method} ${log.endpoint}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
+                                  style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -303,8 +299,8 @@ Duration: ${log.durationText}
                                 color: log.hasError
                                     ? Colors.red
                                     : log.isSuccess
-                                        ? Colors.green
-                                        : Colors.orange,
+                                    ? Colors.green
+                                    : Colors.orange,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -365,8 +361,8 @@ Duration: ${log.durationText}
                       child: SelectableText(
                         _formatJsonString(log.requestBody!),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontFamily: 'monospace',
-                            ),
+                          fontFamily: 'monospace',
+                        ),
                       ),
                     ),
                   ],
@@ -420,9 +416,7 @@ Duration: ${log.durationText}
                         ),
                         child: SelectableText(
                           _formatJsonString(log.responseBody!),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
+                          style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(fontFamily: 'monospace'),
                         ),
                       ),
@@ -505,9 +499,9 @@ class _DetailSection extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
         ),
         const SizedBox(height: 8),
