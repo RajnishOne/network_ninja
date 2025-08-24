@@ -290,7 +290,7 @@ Network Ninja automatically redacts sensitive information:
 
 | Main Demo | Network Logs | Log Details |
 |:---:|:---:|:---:|
-| <img src="screenshots/1.jpg" width="200" height="400" alt="Main Demo"> | <img src="screenshots/2.jpg" width="200" height="400" alt="Network Logs"> | <img src="screenshots/3.jpg" width="200" height="400" alt="Log Details"> |
+| <img src="screenshots/1.jpg" width="250" height="500" alt="Main Demo"> | <img src="screenshots/2.jpg" width="250" height="500" alt="Network Logs"> | <img src="screenshots/3.jpg" width="250" height="500" alt="Log Details"> |
 | *Main interface with API buttons* | *Comprehensive logs with filters* | *Detailed request/response info* |
 
 ## 📱 Example App
