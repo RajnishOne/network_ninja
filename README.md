@@ -288,17 +288,10 @@ Network Ninja automatically redacts sensitive information:
 
 ## 📸 Screenshots
 
-### Main Demo Interface
-![Demo](screenshots/1.jpg)
-*Main demo interface with API buttons and floating bubble UI*
-
-### Network Logs Screen  
-![Logs](screenshots/2.jpg)
-*Comprehensive logs with filters and search functionality*
-
-### Network Log Details Screen
-![Details](screenshots/3.jpg)
-*Detailed API logs with request/response information and action items*
+| Main Demo | Network Logs | Log Details |
+|:---:|:---:|:---:|
+| ![Demo](screenshots/1.jpg) | ![Logs](screenshots/2.jpg) | ![Details](screenshots/3.jpg) |
+| *Main interface with API buttons* | *Comprehensive logs with filters* | *Detailed request/response info* |
 
 ## 📱 Example App
 
