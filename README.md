@@ -24,14 +24,6 @@ A powerful network logger library with floating bubble UI for monitoring API cal
 | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/master/screenshots/1.jpg" width="250" height="600" alt="Main Demo"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/master/screenshots/2.jpg" width="250" height="600" alt="Network Logs"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/master/screenshots/3.jpg" width="250" height="600" alt="Log Details"> |
 | *Main interface with API buttons* | *Comprehensive logs with filters* | *Detailed request/response info* |
 
-## 🌐 Live Demo
-
-Try the Network Ninja demo right in your browser! 
-
-**[🚀 Launch Web Demo](https://bluematterin.github.io/network_ninja/)**
-
-*Experience the full Network Ninja functionality with real API calls and network monitoring.*
-
 ## 🚀 Quick Start
 
 ### Installation
