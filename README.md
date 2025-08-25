@@ -321,11 +321,8 @@ flutter run
 # Build and copy to docs folder (Windows)
 scripts\build_web_demo.bat
 
-# Serve locally (Linux/Mac)
-./scripts/serve_web_demo.sh
-
-# Serve locally (Windows)
-scripts\serve_web_demo.bat
+# Or test directly in debug mode
+cd example && flutter run -d chrome
 ```
 
 ## 🤝 Contributing

@@ -15,4 +15,7 @@ echo    - Set Branch to 'master' and folder to '/docs'
 echo    - Save
 echo.
 echo 📍 Your web demo will be available at: https://bluematterin.github.io/network_ninja/
+echo.
+echo 💡 To test the web demo in debug mode:
+echo    cd example ^&^& flutter run -d chrome
 pause
