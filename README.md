@@ -25,7 +25,7 @@ Add `network_ninja` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  network_ninja: ^1.0.0
+  network_ninja: <latest version>
 ```
 
 ### Basic Usage
