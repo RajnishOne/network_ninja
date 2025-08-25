@@ -293,30 +293,6 @@ Network Ninja automatically redacts sensitive information:
 - **Cookie headers** - Automatically masked
 - **Set-Cookie headers** - Automatically masked
 
-## 📱 Example App
-
-Check out the [example app](example/) for a complete implementation:
-
-**🌐 [Web Demo](https://bluematterin.github.io/network_ninja/)** - Try it in your browser!
-
-**📱 Local Development:**
-```bash
-cd example
-flutter run
-```
-
-**🌐 Web Demo Testing:**
-```bash
-# Build and copy to docs folder (Linux/Mac)
-./scripts/build_web_demo.sh
-
-# Build and copy to docs folder (Windows)
-scripts\build_web_demo.bat
-
-# Or test directly in debug mode
-cd example && flutter run -d chrome
-```
-
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for details.
