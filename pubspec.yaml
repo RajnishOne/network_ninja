@@ -5,6 +5,10 @@ repository: https://github.com/BlueMatterIn/network_ninja
 issue_tracker: https://github.com/BlueMatterIn/network_ninja/issues
 license: MIT
 
+# Exclude docs folder from package (used for GitHub Pages)
+exclude:
+  - docs/
+
 environment:
   sdk: '>=3.8.0 <4.0.0'
   flutter: ">=3.16.0"
