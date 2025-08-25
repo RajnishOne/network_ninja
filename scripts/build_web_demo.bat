@@ -2,20 +2,17 @@
 echo 🚀 Building Network Ninja Web Demo...
 
 cd example
-flutter build web --release
+call flutter build web --release
 
-echo 📁 Copying to docs folder...
-xcopy /E /I /Y build\web\* ..\docs\
+echo 📁 Copying to network_ninja_web folder...
 
-echo ✅ Web demo built and copied to docs folder!
-echo 🌐 You can now enable GitHub Pages in your repository settings:
-echo    - Go to Settings → Pages
-echo    - Set Source to 'Deploy from a branch'
-echo    - Set Branch to 'master' and folder to '/docs'
-echo    - Save
-echo.
-echo 📍 Your web demo will be available at: https://bluematterin.github.io/network_ninja/
-echo.
-echo 💡 To test the web demo in debug mode:
-echo    cd example ^&^& flutter run -d chrome
-pause
+REM Check if directory exists, if not create it
+if not exist "..\..\network_ninja_web" (
+    echo 📂 Creating network_ninja_web directory...
+    mkdir "..\..\network_ninja_web"
+)
+
+echo 📋 Copying files...
+call xcopy /E /I /Y build\web\* ..\..\network_ninja_web\
+
+echo ✅ Web demo built and copied to network_ninja_web folder!
