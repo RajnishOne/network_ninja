@@ -21,7 +21,7 @@ A powerful network logger library with floating bubble UI for monitoring API cal
 
 | Main Demo | Network Logs | Log Details |
 |:---:|:---:|:---:|
-| <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/main/screenshots/1.jpg" width="250" height="600" alt="Main Demo"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/main/screenshots/2.jpg" width="250" height="600" alt="Network Logs"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/main/screenshots/3.jpg" width="250" height="600" alt="Log Details"> |
+| <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/master/screenshots/1.jpg" width="250" height="600" alt="Main Demo"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/master/screenshots/2.jpg" width="250" height="600" alt="Network Logs"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/master/screenshots/3.jpg" width="250" height="600" alt="Log Details"> |
 | *Main interface with API buttons* | *Comprehensive logs with filters* | *Detailed request/response info* |
 
 ## 🌐 Live Demo
