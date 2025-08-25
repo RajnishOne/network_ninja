@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0]
+
+### Added
+- **Web Demo**: Live web version of the Network Ninja example app
+- **GitHub Pages Integration**: Automatic deployment of web demo via GitHub Actions
+- **Web Demo Scripts**: Local testing scripts for web version (Windows/Linux/Mac)
+- **Enhanced Documentation**: Updated README with web demo links and instructions
+
+### Features
+- **Live Web Demo**: Try Network Ninja directly in your browser at https://bluematterin.github.io/network_ninja/
+- **Cross-platform Web Support**: Full Flutter web compatibility
+- **Automatic Deployment**: CI/CD pipeline for web demo updates
+- **Local Testing**: Easy local web demo testing with provided scripts
+
+### Technical Details
+- Built web demo using Flutter web build system
+- GitHub Actions workflow for automated deployment
+- Web-optimized UI components and interactions
+- Responsive design for various screen sizes
+
 ## [1.0.3]
 
 ### Changed
