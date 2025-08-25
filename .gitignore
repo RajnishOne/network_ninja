@@ -29,3 +29,5 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
+# Keep web_demo folder for GitHub Pages
+!web_demo/
