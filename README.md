@@ -17,6 +17,13 @@ A powerful network logger library with floating bubble UI for monitoring API cal
 - 🎨 **Material Design** - Beautiful UI that follows Flutter design guidelines
 - 🔒 **Privacy Focused** - Automatic redaction of sensitive headers (Authorization, Cookies)
 
+## 📸 Screenshots
+
+| Main Demo | Network Logs | Log Details |
+|:---:|:---:|:---:|
+| <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/main/screenshots/1.jpg" width="250" height="600" alt="Main Demo"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/main/screenshots/2.jpg" width="250" height="600" alt="Network Logs"> | <img src="https://raw.githubusercontent.com/BlueMatterIn/network_ninja/main/screenshots/3.jpg" width="250" height="600" alt="Log Details"> |
+| *Main interface with API buttons* | *Comprehensive logs with filters* | *Detailed request/response info* |
+
 ## 🚀 Quick Start
 
 ### Installation
@@ -285,13 +292,6 @@ Network Ninja automatically redacts sensitive information:
 - **Authorization headers** - Automatically masked
 - **Cookie headers** - Automatically masked
 - **Set-Cookie headers** - Automatically masked
-
-## 📸 Screenshots
-
-| Main Demo | Network Logs | Log Details |
-|:---:|:---:|:---:|
-| <img src="screenshots/1.jpg" width="250" height="600" alt="Main Demo"> | <img src="screenshots/2.jpg" width="250" height="600" alt="Network Logs"> | <img src="screenshots/3.jpg" width="250" height="600" alt="Log Details"> |
-| *Main interface with API buttons* | *Comprehensive logs with filters* | *Detailed request/response info* |
 
 ## 📱 Example App
 
