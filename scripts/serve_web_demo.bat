@@ -6,11 +6,11 @@ echo.
 echo Press Ctrl+C to stop the server
 echo.
 
-cd web_demo
+cd docs
 python -m http.server 8000
 
 if errorlevel 1 (
     echo ❌ Python not found. Please install Python or use another HTTP server.
-    echo Alternative: cd web_demo ^&^& npx serve .
+    echo Alternative: cd docs ^&^& npx serve .
     pause
 )

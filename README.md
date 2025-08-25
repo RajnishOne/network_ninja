@@ -315,9 +315,11 @@ flutter run
 
 **🌐 Web Demo Testing:**
 ```bash
-# Build web version
-cd example
-flutter build web --release
+# Build and copy to docs folder (Linux/Mac)
+./scripts/build_web_demo.sh
+
+# Build and copy to docs folder (Windows)
+scripts\build_web_demo.bat
 
 # Serve locally (Linux/Mac)
 ./scripts/serve_web_demo.sh

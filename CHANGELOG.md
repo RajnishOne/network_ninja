@@ -9,19 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Web Demo**: Live web version of the Network Ninja example app
-- **GitHub Pages Integration**: Automatic deployment of web demo via GitHub Actions
+- **GitHub Pages Integration**: Simple docs folder setup for web demo hosting
 - **Web Demo Scripts**: Local testing scripts for web version (Windows/Linux/Mac)
 - **Enhanced Documentation**: Updated README with web demo links and instructions
 
 ### Features
 - **Live Web Demo**: Try Network Ninja directly in your browser at https://bluematterin.github.io/network_ninja/
 - **Cross-platform Web Support**: Full Flutter web compatibility
-- **Automatic Deployment**: CI/CD pipeline for web demo updates
+- **Simple Setup**: Standard GitHub Pages with docs folder
 - **Local Testing**: Easy local web demo testing with provided scripts
 
 ### Technical Details
 - Built web demo using Flutter web build system
-- GitHub Actions workflow for automated deployment
+- Standard GitHub Pages deployment via docs folder
 - Web-optimized UI components and interactions
 - Responsive design for various screen sizes
 
