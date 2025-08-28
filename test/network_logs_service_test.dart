@@ -177,8 +177,10 @@ void main() {
         final updatedLog = service.logs.first;
         expect(updatedLog.responseStatus, equals(200));
         expect(updatedLog.responseBody, equals('{"success": true}'));
-        expect(updatedLog.responseHeaders,
-            equals({'Content-Type': 'application/json'}));
+        expect(
+          updatedLog.responseHeaders,
+          equals({'Content-Type': 'application/json'}),
+        );
         expect(updatedLog.duration, equals(const Duration(milliseconds: 150)));
         expect(updatedLog.error, isNull);
       });
@@ -205,8 +207,10 @@ void main() {
         final updatedLog = service.logs.first;
         expect(updatedLog.responseStatus, equals(404));
         expect(updatedLog.responseBody, equals('{"error": "Not found"}'));
-        expect(updatedLog.responseHeaders,
-            equals({'Content-Type': 'application/json'}));
+        expect(
+          updatedLog.responseHeaders,
+          equals({'Content-Type': 'application/json'}),
+        );
         expect(updatedLog.duration, equals(const Duration(milliseconds: 100)));
         expect(updatedLog.error, equals('Resource not found'));
       });
@@ -232,10 +236,7 @@ void main() {
         );
 
         // Act & Assert
-        expectLater(
-          service.logsStream,
-          emits([log]),
-        );
+        expectLater(service.logsStream, emits([log]));
 
         service.addLog(log);
       });
@@ -246,11 +247,12 @@ void main() {
         // Arrange
         const maxLogs = 100;
         final logs = List.generate(
-            maxLogs + 10,
-            (index) => service.createLog(
-                  method: 'GET',
-                  endpoint: 'https://api.example.com/test$index',
-                ));
+          maxLogs + 10,
+          (index) => service.createLog(
+            method: 'GET',
+            endpoint: 'https://api.example.com/test$index',
+          ),
+        );
 
         // Act
         for (final log in logs) {
@@ -266,11 +268,12 @@ void main() {
       test('should keep most recent logs when limit is exceeded', () {
         // Arrange
         final logs = List.generate(
-            110,
-            (index) => service.createLog(
-                  method: 'GET',
-                  endpoint: 'https://api.example.com/test$index',
-                ));
+          110,
+          (index) => service.createLog(
+            method: 'GET',
+            endpoint: 'https://api.example.com/test$index',
+          ),
+        );
 
         // Act
         for (final log in logs) {
@@ -335,10 +338,7 @@ void main() {
             'https://api.example.com/test?param=value&another=param#fragment';
 
         // Act
-        final log = service.createLog(
-          method: 'GET',
-          endpoint: specialEndpoint,
-        );
+        final log = service.createLog(method: 'GET', endpoint: specialEndpoint);
 
         // Assert
         expect(log.endpoint, equals(specialEndpoint));

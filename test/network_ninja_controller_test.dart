@@ -26,8 +26,10 @@ void main() {
         // Assert
         expect(dio.interceptors.length, greaterThan(initialCount));
         expect(
-          dio.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isTrue,
         );
       });
@@ -55,8 +57,10 @@ void main() {
         // Assert
         expect(dio.interceptors.length, equals(initialCount + 1));
         expect(
-          dio.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isTrue,
         );
       });
@@ -67,8 +71,10 @@ void main() {
         // Arrange
         NetworkNinjaController.addInterceptor(dio);
         expect(
-          dio.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isTrue,
         );
 
@@ -77,8 +83,10 @@ void main() {
 
         // Assert
         expect(
-          dio.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isFalse,
         );
       });
@@ -88,8 +96,10 @@ void main() {
         final initialCount = dio.interceptors.length;
 
         // Act & Assert
-        expect(() => NetworkNinjaController.removeInterceptor(dio),
-            returnsNormally);
+        expect(
+          () => NetworkNinjaController.removeInterceptor(dio),
+          returnsNormally,
+        );
         expect(dio.interceptors.length, equals(initialCount));
       });
 
@@ -107,8 +117,10 @@ void main() {
         expect(dio.interceptors.length, equals(initialCount - 1));
         expect(dio.interceptors.contains(logInterceptor), isTrue);
         expect(
-          dio.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isFalse,
         );
       });
@@ -117,7 +129,8 @@ void main() {
         // Arrange
         NetworkNinjaController.addInterceptor(dio);
         NetworkNinjaController.addInterceptor(
-            dio); // This should not add duplicate
+          dio,
+        ); // This should not add duplicate
         final initialCount = dio.interceptors.length;
 
         // Act
@@ -126,8 +139,10 @@ void main() {
         // Assert
         expect(dio.interceptors.length, equals(initialCount - 1));
         expect(
-          dio.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isFalse,
         );
       });
@@ -183,25 +198,33 @@ void main() {
         NetworkNinjaController.addInterceptor(dio2);
 
         expect(
-          dio1.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio1.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isTrue,
         );
         expect(
-          dio2.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio2.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isTrue,
         );
 
         NetworkNinjaController.removeInterceptor(dio1);
         expect(
-          dio1.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio1.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isFalse,
         );
         expect(
-          dio2.interceptors.any((interceptor) =>
-              interceptor.runtimeType.toString().contains('NetworkNinja')),
+          dio2.interceptors.any(
+            (interceptor) =>
+                interceptor.runtimeType.toString().contains('NetworkNinja'),
+          ),
           isTrue,
         );
 
