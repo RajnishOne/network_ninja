@@ -8,7 +8,7 @@ void main() {
     setUp(() {
       baseLog = NetworkLog(
         id: 'test-123',
-        timestamp: DateTime(2024, 1, 1, 12, 0),
+        timestamp: DateTime(2024, 1, 1, 12),
         method: 'GET',
         endpoint: 'https://api.example.com/test',
         requestBody: '{"test": "data"}',
@@ -24,13 +24,13 @@ void main() {
       test('should create NetworkLog with all required properties', () {
         final log = NetworkLog(
           id: 'test-id',
-          timestamp: DateTime(2024, 1),
+          timestamp: DateTime(2024),
           method: 'POST',
           endpoint: 'https://api.example.com',
         );
 
         expect(log.id, equals('test-id'));
-        expect(log.timestamp, equals(DateTime(2024, 1)));
+        expect(log.timestamp, equals(DateTime(2024)));
         expect(log.method, equals('POST'));
         expect(log.endpoint, equals('https://api.example.com'));
         expect(log.requestBody, isNull);
@@ -45,7 +45,7 @@ void main() {
       test('should create NetworkLog with all optional properties', () {
         final log = NetworkLog(
           id: 'test-id',
-          timestamp: DateTime(2024, 1),
+          timestamp: DateTime(2024),
           method: 'POST',
           endpoint: 'https://api.example.com',
           requestBody: '{"data": "test"}',
@@ -96,7 +96,7 @@ void main() {
         // Create a new log with null responseStatus
         final logWithNullStatus = NetworkLog(
           id: 'test-null-status',
-          timestamp: DateTime(2024, 1, 1, 12, 0),
+          timestamp: DateTime(2024, 1, 1, 12),
           method: 'GET',
           endpoint: 'https://api.example.com/test',
         );
@@ -182,7 +182,7 @@ void main() {
         // Create a new log with null responseStatus
         final logWithNullStatus = NetworkLog(
           id: 'test-null-status',
-          timestamp: DateTime(2024, 1, 1, 12, 0),
+          timestamp: DateTime(2024, 1, 1, 12),
           method: 'GET',
           endpoint: 'https://api.example.com/test',
         );
@@ -286,7 +286,7 @@ void main() {
 
     group('copyWith Method', () {
       test('should create new instance with updated values', () {
-        final newTimestamp = DateTime(2024, 1, 2, 12, 0);
+        final newTimestamp = DateTime(2024, 1, 2, 12);
         const newDuration = Duration(seconds: 5);
         const newStatus = 404;
 
@@ -320,7 +320,7 @@ void main() {
         // Create a new log with null values
         final copiedLog = NetworkLog(
           id: 'test-null-values',
-          timestamp: DateTime(2024, 1, 1, 12, 0),
+          timestamp: DateTime(2024, 1, 1, 12),
           method: 'GET',
           endpoint: 'https://api.example.com/test',
         );
