@@ -21,6 +21,12 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
   bool _isSearchActive = false;
   StreamSubscription<List<NetworkLog>>? _logsSubscription;
 
+  // Caching variables for performance optimization
+  List<NetworkLog>? _cachedFilteredLogs;
+  String? _lastFilter;
+  String? _lastSearchQuery;
+  int? _lastLogsHash;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +35,8 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
       if (mounted) {
         setState(() {
           _logs = logs;
+          // Clear cache when logs change
+          _cachedFilteredLogs = null;
         });
       }
     });
@@ -47,6 +55,8 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
       if (!_isSearchActive) {
         _searchController.clear();
         _searchQuery = '';
+        // Clear cache when search is disabled
+        _cachedFilteredLogs = null;
       }
     });
   }
@@ -54,10 +64,22 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
   void _updateSearchQuery(String query) {
     setState(() {
       _searchQuery = query.toLowerCase();
+      // Clear cache when search query changes
+      _cachedFilteredLogs = null;
     });
   }
 
   List<NetworkLog> get _filteredLogs {
+    // Check if we can use cached results
+    final logsHash = _logs.length.hashCode;
+    if (_cachedFilteredLogs != null &&
+        _lastFilter == _filter &&
+        _lastSearchQuery == _searchQuery &&
+        _lastLogsHash == logsHash) {
+      return _cachedFilteredLogs!;
+    }
+
+    // Recalculate and cache the results
     List<NetworkLog> filtered;
 
     // Apply status filter first
@@ -92,6 +114,13 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
     if (filtered.isNotEmpty) {
       filtered.sort((a, b) => b.timestamp.compareTo(a.timestamp));
     }
+
+    // Cache the results
+    _cachedFilteredLogs = filtered;
+    _lastFilter = _filter;
+    _lastSearchQuery = _searchQuery;
+    _lastLogsHash = logsHash;
+
     return filtered;
   }
 
@@ -108,6 +137,8 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
           onSelected: (value) {
             setState(() {
               _filter = value;
+              // Clear cache when filter changes
+              _cachedFilteredLogs = null;
             });
           },
           itemBuilder: (context) => [
@@ -262,72 +293,70 @@ class _NetworkLogCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: ListTile(
-        leading: _StatusIcon(log: log),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  log.method,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+    child: ListTile(
+      leading: _StatusIcon(log: log),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                log.method,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  log.endpoint,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    log.endpoint,
-                    style: Theme.of(context).textTheme.bodySmall,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Text(
+                DateFormat('HH:mm:ss').format(log.timestamp),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const Spacer(),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 150),
+                child: Text(
+                  log.statusText,
+                  key: ValueKey('${log.id}_${log.responseStatus}_${log.error}'),
+                  style: TextStyle(
+                    color: log.hasError
+                        ? Colors.red
+                        : log.isSuccess
+                        ? Colors.green
+                        : Colors.orange,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
+              ),
+              if (log.durationText.isNotEmpty) ...[
+                const SizedBox(width: 8),
                 Text(
-                  DateFormat('HH:mm:ss').format(log.timestamp),
+                  log.durationText,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const Spacer(),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
-                  child: Text(
-                    log.statusText,
-                    key: ValueKey(
-                      '${log.id}_${log.responseStatus}_${log.error}',
-                    ),
-                    style: TextStyle(
-                      color: log.hasError
-                          ? Colors.red
-                          : log.isSuccess
-                          ? Colors.green
-                          : Colors.orange,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                if (log.durationText.isNotEmpty) ...[
-                  const SizedBox(width: 8),
-                  Text(
-                    log.durationText,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
               ],
-            ),
-          ],
-        ),
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => NetworkLogDetailsScreen(log: log),
+            ],
           ),
+        ],
+      ),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => NetworkLogDetailsScreen(log: log),
         ),
       ),
-    );
+    ),
+  );
 }
 
 class _StatusIcon extends StatelessWidget {
