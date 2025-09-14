@@ -125,165 +125,184 @@ class _NetworkLogsScreenState extends State<NetworkLogsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('Network Logs'),
-      actions: [
-        IconButton(
-          icon: Icon(_isSearchActive ? Icons.search_off : Icons.search),
-          onPressed: _toggleSearch,
-        ),
-        PopupMenuButton<String>(
-          onSelected: (value) {
-            setState(() {
-              _filter = value;
-              // Clear cache when filter changes
-              _cachedFilteredLogs = null;
-            });
-          },
-          itemBuilder: (context) => [
-            const PopupMenuItem(value: 'all', child: Text('All')),
-            const PopupMenuItem(value: 'success', child: Text('Success')),
-            const PopupMenuItem(value: 'error', child: Text('Errors')),
-            const PopupMenuItem(value: 'pending', child: Text('Pending')),
-          ],
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(_filter.toUpperCase()),
-                const Icon(Icons.arrow_drop_down),
-              ],
+  Widget build(BuildContext context) =>
+      Scaffold(
+        appBar: AppBar(
+          title: const Text('Network Logs'),
+          actions: [
+            IconButton(
+              icon: Icon(_isSearchActive ? Icons.search_off : Icons.search),
+              onPressed: _toggleSearch,
             ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.clear_all),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Clear Logs'),
-                content: const Text(
-                  'Are you sure you want to clear all network logs?',
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                setState(() {
+                  _filter = value;
+                  // Clear cache when filter changes
+                  _cachedFilteredLogs = null;
+                });
+              },
+              itemBuilder: (context) =>
+              [
+                const PopupMenuItem(value: 'all', child: Text('All')),
+                const PopupMenuItem(value: 'success', child: Text('Success')),
+                const PopupMenuItem(value: 'error', child: Text('Errors')),
+                const PopupMenuItem(value: 'pending', child: Text('Pending')),
+              ],
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(_filter.toUpperCase()),
+                    const Icon(Icons.arrow_drop_down),
+                  ],
                 ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      _logsService.clearLogs();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Clear'),
-                  ),
-                ],
               ),
-            );
-          },
-        ),
-      ],
-    ),
-    body: Column(
-      children: [
-        // Search bar
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          height: _isSearchActive ? 60 : 0,
-          child: _isSearchActive
-              ? Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: _updateSearchQuery,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      hintText: 'Search by endpoint, method, or status...',
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: _searchQuery.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.clear),
-                              onPressed: () {
-                                _searchController.clear();
-                                _updateSearchQuery('');
-                              },
-                            )
-                          : null,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      filled: true,
-                    ),
-                    autofocus: true,
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-        // Logs list
-        Expanded(
-          child: _filteredLogs.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        _searchQuery.isNotEmpty
-                            ? Icons.search_off
-                            : Icons.network_check,
-                        size: 64,
-                        color: Theme.of(context).colorScheme.outline,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        _searchQuery.isNotEmpty
-                            ? 'No logs match your search'
-                            : 'No network logs found',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        _searchQuery.isNotEmpty
-                            ? 'Try adjusting your search terms'
-                            : 'Network activity will appear here',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
+            ),
+            IconButton(
+              icon: const Icon(Icons.clear_all),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(
+                        title: const Text('Clear Logs'),
+                        content: const Text(
+                          'Are you sure you want to clear all network logs?',
                         ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _logsService.clearLogs();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Clear'),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              : AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 150),
-                  child: ListView.builder(
-                    key: ValueKey(_filteredLogs.length),
-                    padding: const EdgeInsets.only(top: 8),
-                    itemCount: _filteredLogs.length,
-                    itemBuilder: (context, index) {
-                      final log = _filteredLogs[index];
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 100),
-                        curve: Curves.easeOut,
-                        child: _NetworkLogCard(log: log),
-                      );
-                    },
-                  ),
-                ),
+                );
+              },
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+        body: Column(
+          children: [
+            // Search bar
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: _isSearchActive ? 60 : 0,
+              child: _isSearchActive
+                  ? Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: _updateSearchQuery,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    hintText: 'Search by endpoint, method, or status...',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: _searchQuery.isNotEmpty
+                        ? IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () {
+                        _searchController.clear();
+                        _updateSearchQuery('');
+                      },
+                    )
+                        : null,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    filled: true,
+                  ),
+                  autofocus: true,
+                ),
+              )
+                  : const SizedBox.shrink(),
+            ),
+            // Logs list
+            Expanded(
+              child: _filteredLogs.isEmpty
+                  ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      _searchQuery.isNotEmpty
+                          ? Icons.search_off
+                          : Icons.network_check,
+                      size: 64,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .outline,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      _searchQuery.isNotEmpty
+                          ? 'No logs match your search'
+                          : 'No network logs found',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .outline,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _searchQuery.isNotEmpty
+                          ? 'Try adjusting your search terms'
+                          : 'Network activity will appear here',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .outline,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                  : AnimatedSwitcher(
+                duration: const Duration(milliseconds: 150),
+                child: ListView.builder(
+                  key: ValueKey(_filteredLogs.length),
+                  padding: const EdgeInsets.only(top: 8),
+                  itemCount: _filteredLogs.length,
+                  itemBuilder: (context, index) {
+                    final log = _filteredLogs[index];
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 100),
+                      curve: Curves.easeOut,
+                      child: _NetworkLogCard(log: log),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
 }
 
 class _NetworkLogCard extends StatelessWidget {
@@ -292,71 +311,83 @@ class _NetworkLogCard extends StatelessWidget {
   const _NetworkLogCard({required this.log});
 
   @override
-  Widget build(BuildContext context) => Card(
-    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-    child: ListTile(
-      leading: _StatusIcon(log: log),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  Widget build(BuildContext context) =>
+      Card(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: ListTile(
+          leading: _StatusIcon(log: log),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                log.method,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  log.endpoint,
-                  style: Theme.of(context).textTheme.bodySmall,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              Text(
-                DateFormat('HH:mm:ss').format(log.timestamp),
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              const Spacer(),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 150),
-                child: Text(
-                  log.statusText,
-                  key: ValueKey('${log.id}_${log.responseStatus}_${log.error}'),
-                  style: TextStyle(
-                    color: log.hasError
-                        ? Colors.red
-                        : log.isSuccess
-                        ? Colors.green
-                        : Colors.orange,
-                    fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  Text(
+                    log.method,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      log.endpoint,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodySmall,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-              if (log.durationText.isNotEmpty) ...[
-                const SizedBox(width: 8),
-                Text(
-                  log.durationText,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Text(
+                    DateFormat('HH:mm:ss').format(log.timestamp),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodySmall,
+                  ),
+                  const Spacer(),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 150),
+                    child: Text(
+                      log.statusText,
+                      key: ValueKey(
+                          '${log.id}_${log.responseStatus}_${log.error}'),
+                      style: TextStyle(
+                        color: log.hasError
+                            ? Colors.red
+                            : log.isSuccess
+                            ? Colors.green
+                            : Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  if (log.durationText.isNotEmpty) ...[
+                    const SizedBox(width: 8),
+                    Text(
+                      log.durationText,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodySmall,
+                    ),
+                  ],
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => NetworkLogDetailsScreen(log: log),
+          onTap: () =>
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => NetworkLogDetailsScreen(log: log),
+                ),
+              ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
 class _StatusIcon extends StatelessWidget {

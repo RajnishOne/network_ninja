@@ -9,6 +9,7 @@ import 'screens/network_logs_screen.dart';
 /// Provides a simple API to display the bubble and manage network logging
 class NetworkNinjaController {
   static NetworkNinjaController? _instance;
+
   static NetworkNinjaController get instance =>
       _instance ??= NetworkNinjaController._();
 
@@ -156,8 +157,7 @@ class _NetworkNinjaInterceptor extends Interceptor {
       requestHash += options.data.toString().hashCode.toString();
     }
     // Add timestamp to ensure uniqueness for polling requests
-    requestHash += DateTime.now().millisecondsSinceEpoch.toString();
-    return requestHash;
+    return requestHash + DateTime.now().millisecondsSinceEpoch.toString();
   }
 
   String? _formatRequestBody(dynamic data) {
