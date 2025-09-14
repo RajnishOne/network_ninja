@@ -115,8 +115,7 @@ class _NetworkLogsBubbleState extends State<NetworkLogsBubble>
 
     return AnimatedBuilder(
       animation: _animationController,
-      builder: (context, child) {
-        return Transform.scale(
+      builder: (context, child) => Transform.scale(
           scale: _scaleAnimation.value,
           child: Opacity(
             opacity: _opacityAnimation.value,
@@ -182,8 +181,7 @@ class _NetworkLogsBubbleState extends State<NetworkLogsBubble>
               ),
             ),
           ),
-        );
-      },
+        ),
     );
   }
 }

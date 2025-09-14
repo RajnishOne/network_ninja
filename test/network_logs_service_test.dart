@@ -118,7 +118,7 @@ void main() {
       test('should create log with all information', () {
         // Arrange
         const headers = {'Content-Type': 'application/json'};
-        final requestBody = '{"test": "data"}';
+        const requestBody = '{"test": "data"}';
 
         // Act
         final log = service.createLog(
@@ -294,8 +294,6 @@ void main() {
         final log = service.createLog(
           method: 'GET',
           endpoint: 'https://api.example.com/test',
-          requestBody: null,
-          requestHeaders: null,
         );
 
         // Assert
@@ -334,7 +332,7 @@ void main() {
 
       test('should handle special characters in endpoint', () {
         // Arrange
-        final specialEndpoint =
+        const specialEndpoint =
             'https://api.example.com/test?param=value&another=param#fragment';
 
         // Act

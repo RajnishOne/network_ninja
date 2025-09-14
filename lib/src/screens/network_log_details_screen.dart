@@ -164,8 +164,7 @@ Duration: ${log.durationText}
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: Text('${log.method} ${log.endpoint}'),
         actions: [
@@ -449,7 +448,6 @@ Duration: ${log.durationText}
         ),
       ),
     );
-  }
 }
 
 class _StatusIcon extends StatelessWidget {
@@ -492,8 +490,7 @@ class _DetailSection extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
@@ -520,5 +517,4 @@ class _DetailSection extends StatelessWidget {
         ),
       ],
     );
-  }
 }

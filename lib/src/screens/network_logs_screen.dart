@@ -261,8 +261,7 @@ class _NetworkLogCard extends StatelessWidget {
   const _NetworkLogCard({required this.log});
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ListTile(
         leading: _StatusIcon(log: log),
@@ -329,7 +328,6 @@ class _NetworkLogCard extends StatelessWidget {
         ),
       ),
     );
-  }
 }
 
 class _StatusIcon extends StatelessWidget {

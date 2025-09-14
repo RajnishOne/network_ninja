@@ -8,7 +8,7 @@ void main() {
     setUp(() {
       baseLog = NetworkLog(
         id: 'test-123',
-        timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+        timestamp: DateTime(2024, 1, 1, 12, 0),
         method: 'GET',
         endpoint: 'https://api.example.com/test',
         requestBody: '{"test": "data"}',
@@ -24,13 +24,13 @@ void main() {
       test('should create NetworkLog with all required properties', () {
         final log = NetworkLog(
           id: 'test-id',
-          timestamp: DateTime(2024, 1, 1),
+          timestamp: DateTime(2024, 1),
           method: 'POST',
           endpoint: 'https://api.example.com',
         );
 
         expect(log.id, equals('test-id'));
-        expect(log.timestamp, equals(DateTime(2024, 1, 1)));
+        expect(log.timestamp, equals(DateTime(2024, 1)));
         expect(log.method, equals('POST'));
         expect(log.endpoint, equals('https://api.example.com'));
         expect(log.requestBody, isNull);
@@ -45,7 +45,7 @@ void main() {
       test('should create NetworkLog with all optional properties', () {
         final log = NetworkLog(
           id: 'test-id',
-          timestamp: DateTime(2024, 1, 1),
+          timestamp: DateTime(2024, 1),
           method: 'POST',
           endpoint: 'https://api.example.com',
           requestBody: '{"data": "test"}',
@@ -96,7 +96,7 @@ void main() {
         // Create a new log with null responseStatus
         final logWithNullStatus = NetworkLog(
           id: 'test-null-status',
-          timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+          timestamp: DateTime(2024, 1, 1, 12, 0),
           method: 'GET',
           endpoint: 'https://api.example.com/test',
         );
@@ -139,13 +139,13 @@ void main() {
           isTrue,
         );
         expect(
-          baseLog.copyWith(responseStatus: null, error: 'Timeout').hasError,
+          baseLog.copyWith(error: 'Timeout').hasError,
           isTrue,
         );
       });
 
       test('should return false for null status without error', () {
-        expect(baseLog.copyWith(responseStatus: null).hasError, isFalse);
+        expect(baseLog.copyWith().hasError, isFalse);
       });
     });
 
@@ -182,7 +182,7 @@ void main() {
         // Create a new log with null responseStatus
         final logWithNullStatus = NetworkLog(
           id: 'test-null-status',
-          timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+          timestamp: DateTime(2024, 1, 1, 12, 0),
           method: 'GET',
           endpoint: 'https://api.example.com/test',
         );
@@ -249,7 +249,6 @@ void main() {
           responseStatus: baseLog.responseStatus,
           responseBody: baseLog.responseBody,
           responseHeaders: baseLog.responseHeaders,
-          duration: null,
           error: baseLog.error,
         );
         expect(logWithNullDuration.durationText, equals(''));
@@ -287,8 +286,8 @@ void main() {
 
     group('copyWith Method', () {
       test('should create new instance with updated values', () {
-        final newTimestamp = DateTime(2024, 1, 2, 12, 0, 0);
-        final newDuration = const Duration(seconds: 5);
+        final newTimestamp = DateTime(2024, 1, 2, 12, 0);
+        const newDuration = Duration(seconds: 5);
         const newStatus = 404;
 
         final copiedLog = baseLog.copyWith(
@@ -321,7 +320,7 @@ void main() {
         // Create a new log with null values
         final copiedLog = NetworkLog(
           id: 'test-null-values',
-          timestamp: DateTime(2024, 1, 1, 12, 0, 0),
+          timestamp: DateTime(2024, 1, 1, 12, 0),
           method: 'GET',
           endpoint: 'https://api.example.com/test',
         );
