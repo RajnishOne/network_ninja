@@ -101,7 +101,7 @@ class NetworkLogDetailsScreen extends StatelessWidget {
 
   void _shareLog(BuildContext context) {
     final shareText =
-        '''
+    '''
 Network Log: ${log.method} ${log.endpoint}
 Status: ${log.statusText}
 Time: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(log.timestamp)}
@@ -164,290 +164,315 @@ Duration: ${log.durationText}
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text('${log.method} ${log.endpoint}'),
-      actions: [
-        PopupMenuButton<String>(
-          onSelected: (value) => _handleMenuAction(context, value),
-          itemBuilder: (context) => [
-            const PopupMenuItem(
-              value: 'copy_curl',
-              child: Row(
-                children: [
-                  Icon(Icons.content_copy),
-                  SizedBox(width: 8),
-                  Text('Copy cURL'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'copy_url',
-              child: Row(
-                children: [
-                  Icon(Icons.link),
-                  SizedBox(width: 8),
-                  Text('Copy URL'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'copy_request',
-              child: Row(
-                children: [
-                  Icon(Icons.upload),
-                  SizedBox(width: 8),
-                  Text('Copy Request'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'copy_response',
-              child: Row(
-                children: [
-                  Icon(Icons.download),
-                  SizedBox(width: 8),
-                  Text('Copy Response'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'share',
-              child: Row(
-                children: [
-                  Icon(Icons.share),
-                  SizedBox(width: 8),
-                  Text('Share'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'open_url',
-              child: Row(
-                children: [
-                  Icon(Icons.open_in_new),
-                  SizedBox(width: 8),
-                  Text('Open in Browser'),
-                ],
-              ),
-            ),
-            const PopupMenuItem(
-              value: 'export_json',
-              child: Row(
-                children: [
-                  Icon(Icons.code),
-                  SizedBox(width: 8),
-                  Text('Export as JSON'),
-                ],
+  Widget build(BuildContext context) =>
+      Scaffold(
+        appBar: AppBar(
+          title: Text('${log.method} ${log.endpoint}'),
+          actions: [
+            PopupMenuButton<String>(
+              onSelected: (value) => _handleMenuAction(context, value),
+              itemBuilder: (context) =>
+              [
+                const PopupMenuItem(
+                  value: 'copy_curl',
+                  child: Row(
+                    children: [
+                      Icon(Icons.content_copy),
+                      SizedBox(width: 8),
+                      Text('Copy cURL'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'copy_url',
+                  child: Row(
+                    children: [
+                      Icon(Icons.link),
+                      SizedBox(width: 8),
+                      Text('Copy URL'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'copy_request',
+                  child: Row(
+                    children: [
+                      Icon(Icons.upload),
+                      SizedBox(width: 8),
+                      Text('Copy Request'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'copy_response',
+                  child: Row(
+                    children: [
+                      Icon(Icons.download),
+                      SizedBox(width: 8),
+                      Text('Copy Response'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'share',
+                  child: Row(
+                    children: [
+                      Icon(Icons.share),
+                      SizedBox(width: 8),
+                      Text('Share'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'open_url',
+                  child: Row(
+                    children: [
+                      Icon(Icons.open_in_new),
+                      SizedBox(width: 8),
+                      Text('Open in Browser'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'export_json',
+                  child: Row(
+                    children: [
+                      Icon(Icons.code),
+                      SizedBox(width: 8),
+                      Text('Export as JSON'),
+                    ],
+                  ),
+                ),
+              ],
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Icon(Icons.more_vert),
               ),
             ),
           ],
-          child: const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Icon(Icons.more_vert),
-          ),
         ),
-      ],
-    ),
-    body: SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Summary Card
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+        body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Summary Card
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _StatusIcon(log: log),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () => _copyToClipboard(
-                                context,
-                                log.endpoint,
-                                'URL copied to clipboard',
-                              ),
-                              child: Text(
-                                '${log.method} ${log.endpoint}',
-                                style: Theme.of(context).textTheme.titleMedium
-                                    ?.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                              DateFormat(
-                                'yyyy-MM-dd HH:mm:ss',
-                              ).format(log.timestamp),
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                      Row(
                         children: [
-                          Text(
-                            log.statusText,
-                            style: TextStyle(
-                              color: log.hasError
-                                  ? Colors.red
-                                  : log.isSuccess
-                                  ? Colors.green
-                                  : Colors.orange,
-                              fontWeight: FontWeight.bold,
+                          _StatusIcon(log: log),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () =>
+                                      _copyToClipboard(
+                                        context,
+                                        log.endpoint,
+                                        'URL copied to clipboard',
+                                      ),
+                                  child: Text(
+                                    '${log.method} ${log.endpoint}',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat(
+                                    'yyyy-MM-dd HH:mm:ss',
+                                  ).format(log.timestamp),
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodySmall,
+                                ),
+                              ],
                             ),
                           ),
-                          if (log.durationText.isNotEmpty)
-                            Text(
-                              log.durationText,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                log.statusText,
+                                style: TextStyle(
+                                  color: log.hasError
+                                      ? Colors.red
+                                      : log.isSuccess
+                                      ? Colors.green
+                                      : Colors.orange,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              if (log.durationText.isNotEmpty)
+                                Text(
+                                  log.durationText,
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodySmall,
+                                ),
+                            ],
+                          ),
                         ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-          // Request Details
-          _DetailSection(
-            title: 'Request',
-            onTitleTap: () => _copyRequestToClipboard(context),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (log.requestHeaders != null &&
-                    log.requestHeaders!.isNotEmpty) ...[
-                  const Text(
-                    'Headers:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+              // Request Details
+              _DetailSection(
+                title: 'Request',
+                onTitleTap: () => _copyRequestToClipboard(context),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (log.requestHeaders != null &&
+                        log.requestHeaders!.isNotEmpty) ...[
+                      const Text(
+                        'Headers:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      ...log.requestHeaders!.entries.map(
+                            (e) =>
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 4),
+                              child: Text('${e.key}: ${e.value}'),
+                            ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    if (log.requestBody != null &&
+                        log.requestBody!.isNotEmpty) ...[
+                      const Text(
+                        'Body:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Theme
+                              .of(context)
+                              .colorScheme
+                              .surfaceContainerHighest
+                              .withValues(alpha: 0.3),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: SelectableText(
+                          _formatJsonString(log.requestBody!),
+                          style: Theme
+                              .of(
+                            context,
+                          )
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(fontFamily: 'monospace'),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+
+              if (log.responseStatus != null || log.error != null) ...[
+                const SizedBox(height: 24),
+                _DetailSection(
+                  title: 'Response',
+                  onTitleTap: () => _copyResponseToClipboard(context),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (log.responseStatus != null) ...[
+                        Text('Status: ${log.responseStatus}'),
+                        const SizedBox(height: 16),
+                      ],
+                      if (log.responseHeaders != null &&
+                          log.responseHeaders!.isNotEmpty) ...[
+                        const Text(
+                          'Headers:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        ...log.responseHeaders!.entries.map(
+                              (e) =>
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: Text('${e.key}: ${e.value}'),
+                              ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      if (log.responseBody != null &&
+                          log.responseBody!.isNotEmpty) ...[
+                        const Text(
+                          'Body:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .surfaceContainerHighest
+                                .withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: SelectableText(
+                            _formatJsonString(log.responseBody!),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                              fontFamily: 'monospace',
+                            ),
+                          ),
+                        ),
+                      ],
+                      if (log.error != null) ...[
+                        const SizedBox(height: 16),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.red.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.red.withValues(alpha: 0.3),
+                            ),
+                          ),
+                          child: Text(
+                            'Error: ${log.error}',
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  ...log.requestHeaders!.entries.map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text('${e.key}: ${e.value}'),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                ],
-                if (log.requestBody != null && log.requestBody!.isNotEmpty) ...[
-                  const Text(
-                    'Body:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .surfaceContainerHighest
-                          .withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: SelectableText(
-                      _formatJsonString(log.requestBody!),
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
-                    ),
-                  ),
-                ],
+                ),
               ],
-            ),
+            ],
           ),
-
-          if (log.responseStatus != null || log.error != null) ...[
-            const SizedBox(height: 24),
-            _DetailSection(
-              title: 'Response',
-              onTitleTap: () => _copyResponseToClipboard(context),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (log.responseStatus != null) ...[
-                    Text('Status: ${log.responseStatus}'),
-                    const SizedBox(height: 16),
-                  ],
-                  if (log.responseHeaders != null &&
-                      log.responseHeaders!.isNotEmpty) ...[
-                    const Text(
-                      'Headers:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    ...log.responseHeaders!.entries.map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
-                        child: Text('${e.key}: ${e.value}'),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                  if (log.responseBody != null &&
-                      log.responseBody!.isNotEmpty) ...[
-                    const Text(
-                      'Body:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .surfaceContainerHighest
-                            .withValues(alpha: 0.3),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: SelectableText(
-                        _formatJsonString(log.responseBody!),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontFamily: 'monospace',
-                        ),
-                      ),
-                    ),
-                  ],
-                  if (log.error != null) ...[
-                    const SizedBox(height: 16),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.red.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.red.withValues(alpha: 0.3),
-                        ),
-                      ),
-                      child: Text(
-                        'Error: ${log.error}',
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }
 
 class _StatusIcon extends StatelessWidget {
@@ -490,31 +515,43 @@ class _DetailSection extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      GestureDetector(
-        onTap: onTitleTap,
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary,
+  Widget build(BuildContext context) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: onTitleTap,
+            child: Text(
+              title,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .primary,
+              ),
+            ),
           ),
-        ),
-      ),
-      const SizedBox(height: 8),
-      Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Theme.of(
-            context,
-          ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: content,
-      ),
-    ],
-  );
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Theme
+                  .of(
+                context,
+              )
+                  .colorScheme
+                  .surfaceContainerHighest
+                  .withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: content,
+          ),
+        ],
+      );
 }
